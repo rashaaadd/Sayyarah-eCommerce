@@ -1,0 +1,89 @@
+<section>
+    <div class="container">
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="card text-center p-3 m-3">
+                <div class="card-header p-5">
+                    <img src="/images/logo.png" >
+                    <h5 class="my-3 font-color">OTP VERIFICATION</h5>
+                    <div>
+                        <small>Code has been send to +91****{{number}}</small>
+                    </div>
+                </div>
+
+                <form action="/verifyOTP" id="otp-form" method="post">
+                    <div class="form-outline mb-4">
+                        <input type="number" name="otp" id="form3Example4cdg" class="form-control form-control-lg"
+                            placeholder="OTP" />
+                        {{!-- <label class="form-label" for="form3Example4cdg">Password</label> --}}
+                    </div>
+                    {{#if invalid}}
+                      <p class="text-danger">Invalid OTP</p>
+                    {{/if}}
+                    <div>
+
+                        <small>
+                            Didn't get the otp?
+                            <a href="#" class="text-decoration-none">Resend</a>
+                        </small>
+                    </div>
+                    <div class="mt-3 mb-5">
+                        <button class="btn btn-success px-4 verify-btn" type="submit">Verify</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700');
+
+  * {
+    border-radius: 0px !important;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background-color: #e1e1e1 !important;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .card {
+    border: none !important;
+    border-radius: 10px !important;
+    background-color: #e2f7fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
+
+  */ .card-header {
+    background-color: #e2f7fa !important;
+    text-align: center;
+  }
+
+  .card-header>img {
+    width: 180px;
+    background-color: #e2f7fa !important;
+  }
+
+  .input-container input {
+    width: 40px;
+    height: 40px;
+  }
+
+  .form-control:focus {
+    box-shadow: none !important;
+    border: 1px solid #3366FF !important;
+  }
+
+  .verify-btn {
+    border-radius: 20px !important;
+    border: 0px !important;
+    width: 140px;
+    background-color: #3366FF !important;
+  }
+</style>

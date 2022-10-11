@@ -1,0 +1,97 @@
+<div class="header d-none d-lg-block">
+  <div class="d-flex justify-content-between">
+    <p class="text-secondary ps-5">Become a vendor</p>
+    <p class="violet">Book your dream electric vehicle now & Get it in your
+      porch</p>
+    <div class="d-flex pe-4">
+      <p class="text-secondary px-3"><span><i
+            class="fa-solid fa-envelope"
+          ></i></span>
+        Email</p>
+      <p class="text-secondary px-3"><span><i
+            class="fa-solid fa-phone"
+          ></i></span>
+        Call us</p>
+    </div>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid d-flex justify-content-between">
+    <a class="navbar-brand ms-3" href="/"><img
+        src="/images/logo.jpg"
+        alt="Logo"
+        style="width:150px;height:50px;"
+      /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse text-center"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <form class="container-fluid my-auto">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="basic-addon1"
+              />
+              <a href=""><span class="input-group-text" id="basic-addon1"><i
+                    class="fa text-secondary fa-magnifying-glass"
+                  ></i></span></a>
+            </div>
+          </form>
+
+        </li>
+      </ul>
+      <div class="d-flex ms-auto align-items-center" role="search">
+        <div class="nav-icons align-items-center ms-3 dropdown">
+          <a
+            href=""
+            class="text-white dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+          ><i class="fa-regular fa-circle-user"></i>
+            {{userLogged.fname}}</a>
+          <ul class="dropdown-menu mt-4">
+            <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+            <div class="nav-icons align-items-center ms-3">
+              <a href="/logout" class="btn btn-danger"> Log out</a>
+            </div>
+          </ul>
+
+        </div>
+        <div class="nav-icons align-items-center ms-3">
+          <a href="/cart" class="text-white">
+            <i class="fa fa-list-check"></i>
+            My Cart
+            <span
+              class="badge rounded-pill badge-notification bg-danger"
+            >{{cartCount}}</span>
+          </a>
+
+        </div>
+        <div class="nav-icons align-items-center ms-3">
+          <a href="/wishlist" class="text-white"><i class="fa fa-pause"></i>
+            Wishlist</a>
+          <span
+            class="badge rounded-pill badge-notification bg-danger"
+          >{{wishlistCount}}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>

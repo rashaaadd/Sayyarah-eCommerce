@@ -1,0 +1,65 @@
+<section class="vh-100">
+    <div class="row d-flex align-items-center h-100">
+      <div class="admin-bg col-6 text-center">
+        <img class="mt-3" src="/images/admin-logo.jpg" alt="Logo" style="width:300px ;height:150px;">
+      </div>
+      <div class="col-6">
+        <div class=" me-3" style="border-radius: 1rem;">
+          <div class="p-5">
+
+            <h3 class="mb-5 font-color">Admin Login</h3>
+
+            <form action="/admin/adminLogin" id="adminlogin" method="post">
+              <div class="form-outline mb-4">
+                <label class="form-label font-color" for="typeEmailX-2">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control form-control-lg"
+                  placeholder="Enter email address"
+                  value="br@localhost.com"
+                />
+              </div>
+
+              <div class="form-outline mb-4">
+                <label class="form-label font-color" for="typePasswordX-2">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control form-control-lg"
+                  placeholder="Enter password"
+                  value="1234"
+                />
+              </div>
+
+              {{#if error}}
+                <p class="text-danger text-center">Invalid username or password</p>
+              {{/if}}
+
+              <div class=" d-flex justify-content-center">
+                <button type="submit" class="button">Login</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function() {
+        $('#adminlogin').validate({
+            rules:{
+                email: {
+                    required : true,
+                    email : true,
+                },
+                password: {
+                    required: true,
+                    minlength: 4,
+                },
+            }
+        })
+    })
+</script>

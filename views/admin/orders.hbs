@@ -1,0 +1,85 @@
+<div class="container category p-4">
+  <div class="row justify-content-center align-items-center">
+    <h3 class="font-color">Orders</h3>
+    <div class="col-md-10">
+      <div class="card p-3">
+        <div class="table-content pe-4">
+          <table class="table table-hover">
+            <thead>
+              <tr class="font-color">
+                <th scope="col">Sl.No</th>
+                <th scope="col">ORDER ID</th>
+                <th scope="col">USER ID</th>
+                <th scope="col">PAYMENT <br /> METHOD</th>
+                <th scope="col">STATUS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each allOrders}}
+              <tr class="justify-content-center align-items-center">
+                <td>{{inc @index}}</td>
+                <td>{{this._id}}</td>
+                <td>{{this.user}}</td>
+                <td>{{this.paymentMethod}}</td>
+                <td>{{this.status}}</td>
+                <td>
+                  <div class="p-3 d-flex flex-column">
+                    {{#if (orderBooked this.status)}}
+                    <button class="btn btn-primary btn-sm" onclick="approveOrderStatus('{{this._id}}')">Approve</button>
+                    <button class="btn btn-danger btn-sm mt-3"
+                      onclick="rejectOrderStatus('{{this._id}}')">Cancel</button>
+                    {{/if}}
+                    {{#if (orderPending this.status)}}
+                    <button class="btn btn-danger btn-sm mt-3"
+                      onclick="rejectOrderStatus('{{this._id}}')">Cancel</button>
+                    {{/if}}
+                  </div>
+                </td>
+                <td>
+                  <div class="py-3">
+                    <a href="/admin/orderProducts/{{this._id}}" class="btn btn-success btn-sm">View Products</a>
+                  </div>
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function approveOrderStatus(ordId) {
+    $.ajax({
+      url: '/admin/approve-order-status/' + ordId, 
+      method: 'POST', 
+      success: (response) => {
+        if (response.status) {
+          Swal.fire('Hooray!', 'Order approved successfully',
+            'success') 
+          setTimeout(() => { 
+            location.reload() 
+          }, 2000)
+        }
+      }
+    })
+  } 
+  function
+    rejectOrderStatus(ordId) {
+      $.ajax({
+        url: '/admin/reject-order-status/' + ordId,
+        method: 'POST', 
+        success: (response) => {
+          if (response.status) {
+            Swal.fire('Hooray!',
+              'Order rejected successfully', 'success') 
+              setTimeout(() => {
+                location.reload()
+              }, 2000)
+          }
+        }
+      })
+  }
+</script>

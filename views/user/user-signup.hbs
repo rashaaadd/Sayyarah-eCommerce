@@ -1,0 +1,225 @@
+<section class="user-log">
+  <div class="row d-flex h-100">
+    <div class="col-12 col-md-7 my-auto mx-auto">
+      <div class="me-3" style="border-radius: 1rem;">
+        <div class="p-5">
+          <h3 class="mb-5 font-color text-center">Register</h3>
+          <form action="/signup" method="post" id="signupForm">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+
+                <div class="form-outline">
+                  <label
+                    for="fname"
+                    class="form-label font-color"
+                  >First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="fname"
+                    id="fname"
+                    aria-describedby="emailHelp"
+                    placeholder="First Name"
+                  />
+                </div>
+
+              </div>
+              <div class="col-md-6 mb-4">
+
+                <label
+                  for="lname"
+                  class="form-label font-color"
+                >Last Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lname"
+                  id="lname"
+                  aria-describedby="emailHelp"
+                  placeholder="Last Name"
+                />
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label
+                  for="email"
+                  class="form-label font-color"
+                >Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  id="email"
+                  aria-describedby="emailHelp"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label
+                  for="contact"
+                  class="form-label font-color"
+                >Phone number</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  name="contact"
+                  id="contact"
+                  placeholder="Mobile"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+
+                <label class="form-label select-label font-color" for="gender">Gender</label>
+                <select class="form-control" id="gender" name="gender">
+                  <option >Choose option</option>
+                  <option >Male</option>
+                  <option >Female</option>
+                  <option >Others</option>
+                </select>
+                <label id="select-error" class="error" for="fname" style="visibility:hidden;">This field is required.</label>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label
+                  for="dob"
+                  class="form-label font-color"
+                >Date of Birth</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  name="dob"
+                  id="dob"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+
+                <div class="form-outline">
+                  <label
+                    for="password"
+                    class="form-label font-color"
+                  >Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                  />
+                </div>
+
+              </div>
+              <div class="col-md-6 mb-4">
+
+                <label
+                  for="repeatPassword"
+                  class="form-label font-color"
+                >Repeat Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="repeatPassword"
+                  id="repeatPassword"
+                  placeholder="Repeat Password"
+                  data-rule-equalTo="#password"
+                />
+
+              </div>
+            </div>
+            <div class="links text-center mb-3">
+              <a href="" class="text-white">Forgot Password?</a>
+            </div>
+            <div class="d-flex justify-content-center flex-column">
+              <div class="text-center">
+                <button type="submit" class="button">Register</button>
+              </div>
+              {{#if userExist}}
+                <p class="text-white text-center mt-3"><strong>Email Already Exist</strong></p>
+              {{/if}}
+            </div>
+            <h6 class="text-center text-white mt-4">Already have an account?
+              <a href="/login" class="text-white">Log in </a></h6>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  jQuery.validator.addMethod("lettersonly", function(value) {
+      return /^[a-z\s]+$/i.test(value);
+  });
+  jQuery.validator.addMethod("isEmail", function(value) {
+      return /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value);
+  });
+  jQuery.validator.addMethod("isNumber", function(value) {
+      return /^([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})+$/.test(value);
+  });
+  
+
+  
+  $('#signupForm').validate({
+      rules:{
+          fname:{
+              required: true,
+              lettersonly: true,
+              minlength:3
+          },
+          lname:{
+              required: true,
+              lettersonly: true,
+              minlength:1
+          },
+          gender:{
+            required: true,
+            isSelected : true  
+          },
+          contact:{
+              required: true,
+              isNumber : true,
+              minlength:10,
+              maxlength:10
+          },
+          dob:{
+            required: true
+          },
+          email: {
+              required : true,
+              isEmail: true,
+          },
+          password: {
+              required: true,
+              minlength: 4,
+          },
+          repeatPassword: {
+              minlength: 4,
+
+          },
+      },
+      messages:{
+          fname: {
+              lettersonly: "Enter only characters."
+          },
+          lname: {
+              lettersonly: "Enter only characters."
+          },
+          email:{
+              isEmail: "Enter valid Email"
+          },
+          contact:{
+              minlength: "Please enter 10 digits.",
+              maxLength: "Please enter 10 digits.",
+              isNumber : "Please enter 10 digits."
+          }
+      }
+  })
+
+
+     
+</script>

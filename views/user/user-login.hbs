@@ -1,0 +1,73 @@
+<section class="user-log vh-100">
+  <div class="row d-flex h-100">
+    <div class="col-md-7 my-auto mx-auto">
+      <div class="me-3" style="border-radius: 1rem;">
+        <div class="p-5">
+          <h3 class="mb-5 font-color text-center">Login</h3>
+          <form action="/login" method="post" id="loginForm">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label font-color">Email address</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control"
+                aria-describedby="emailHelp"
+                value="0008@gmail.com"
+              />
+            </div>
+            <div class="mb-3">
+              <label
+                for="exampleInputPassword1"
+                class="form-label font-color"
+              >Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                value="1234"
+              />
+            </div>
+            {{#if error}}
+            <div class="text-center">
+              <p class="text-danger">Invalid username or password</p>
+            </div>
+            {{/if}}
+            <div class="links d-flex justify-content-between">
+              <a href="" class="font-color">Forgot Password?</a>
+            </div>
+            <div class=" d-flex justify-content-center">
+              <div class="my-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="exampleCheck1"
+                />
+                <label class="form-check-label" for="exampleCheck1">Remember me</label>
+              </div>
+            </div>
+            <div class=" d-flex justify-content-center">
+              <button type="submit" class="button">Login</button>
+            </div>
+            <h6 class="text-center text-white mt-4">Dont have an account?
+              <a href="/register" class="font-color">Sign up</a></h6>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  $('#loginForm').validate({
+      rules:{
+          email: {
+              required : true,
+              email : true,
+          },
+          password: {
+              required: true,
+              minlength: 4,
+          },
+      }
+  })
+</script>

@@ -1,0 +1,64 @@
+<section class="my-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <h3 class="text-center text-secondary mb-3">My orders</h3>
+            {{#each orderDetails}}
+            <div class="col-md-8">
+                <div class="card mt-3">
+                    <div class="row">
+                        <div class="d-flex justify-content-between mt-3 my-3">
+                            <div class="keys ms-4">
+                                <h6>Order ID :</h6>
+                                <h6>Billing Address:</h6>
+                                <br>
+                                <h6>Time:</h6>
+                                <h6>Total :</h6>
+                                {{#if this.discount}}
+                                <h6>Discount:</h6>
+                                {{/if}}
+                                <h6>Order Status:</h6>
+                                <h6>Message:</h6>
+                                <h6>Payment Method:</h6>
+                            </div>
+                            <div class="values me-4 text-end">
+                                <h6><span id="totalBookPrice">{{this._id}}</span></h6>
+                                <h6><span
+                                        id="billingAddress">{{this.deliveryDetails.address}},{{this.deliveryDetails.city}}</span>
+                                </h6>
+                                <h6><span
+                                        id="address">{{this.deliveryDetails.state}},{{this.deliveryDetails.country}},{{this.deliveryDetails.pincode}}</span>
+                                </h6>
+                                <h6>{{this.date}}</h6>
+                                <h6>₹<span id="grandTotal">{{this.totalAmount}}</span></h6>
+                                {{#if this.discount}}
+                                <h6 class="text-success">₹{{this.discount}}</h6>
+                                {{/if}}
+                                <h6>{{this.status}}</h6>
+                                {{#if (orderBooked this.status)}}
+                                <h6 class="text-warning">Booking confirmed. Approval Pending</h6>
+                                {{else}}{{#if (orderApproved this.status)}}
+                                <h6 class="text-success">Booking Approved! Our team will be contacting you shortly.</h6>
+                                {{else}}{{#if (orderRejected this.status)}}
+                                <h6 class="text-danger">Unfortunately your booking has been rejected. Please contact our team for further details.</h6>
+                                {{else}}{{#if (orderPending this.status)}}
+                                <h6 class="text-warning">Booking under consideration. Contact our support team.</h6>
+                                {{/if}}
+                                {{/if}}
+                                {{/if}}
+                                {{/if}}
+                                <h6>{{this.paymentMethod}}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-4 text-center">
+                            <a href="/view-order-products/{{this._id}}" class="btn btn-success" type="button">View Products</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

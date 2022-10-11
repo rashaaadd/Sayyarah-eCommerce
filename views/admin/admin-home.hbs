@@ -1,0 +1,297 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Begin Page Content -->
+        <div class="container p-4">
+
+            <!-- Page Heading -->
+            <h1 class="font-color h3 mb-4">Dashboard</h1>
+
+            <!-- Content Row -->
+            <div class="row">
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Total Users</div>
+                                    <div class="h5 text-secondary">{{userCount}}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-users fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Total Orders</div>
+                                    <div class="h5 text-secondary">{{orderCount}}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-reception-4 text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Product
+                                        Approved
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 text-secondary">
+                                                {{approvedCount}}</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-check fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Requests Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Products Cancelled</div>
+                                    <div class="h5 text-secondary">{{cancelledCount}}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Row -->
+
+            <div class="row">
+
+                <!-- Area Chart -->
+                <div class="col-xl-6">
+                    <div class="card shadow">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold font-color">Category Revenue</h6>
+
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body" >
+                            <div class="chart-area" >
+                                <canvas id="category" style="width:150px;height:60px"></canvas>
+                                {{!-- <canvas id="earning"></canvas> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold font-color">Monthly Revenue</h6>
+
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body" >
+                            <div class="chart-area" >
+                                <canvas id="myChartBar" style="width:100%;max-width:600px"></canvas>
+                                {{!-- <canvas id="earning"></canvas> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card shadow">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold font-color">Payment-wise Revenue</h6>
+
+                        </div>
+                        <div class="card-body">
+                            <h6 class="font-color"></h6>
+                            <canvas id="myChart" style="width:200px;height:90px"></canvas>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="card shadow">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold font-color">Payment-wise Revenue</h6>
+
+                        </div>
+                        <div class="card-body">
+                            <h6 class="font-color"></h6>
+                            <canvas id="paymentSales" style="width:500px;height:490px"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Content Row -->
+
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white pt-3">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span class="font-color">Copyright &copy; SAYYARAH</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+
+
+</body>
+
+<script>
+    
+    
+    var xValues = [{{#each categories}}"{{this}}",{{/each}}];
+    var yValues = [{{categRevenues}}];
+    var barColors = [
+    "#b91d47",
+    "#00aba9",
+    "#2b5797",
+    "#e8c3b9",
+    "#1e7145"
+    ];
+
+    new Chart("category", {
+    type: "pie",
+    data: {
+        labels: xValues,
+        datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+        }]
+    },
+    options: {
+        title: {
+        display: true,
+        text: "Category-wise Revenue along with total sale"
+        }
+    }
+    });
+</script>
+
+
+<script>
+    var xValues = [ "Aug", "Sep", "Oct", "Nov","Dec"];
+    var yValues = [{{#each monthlyRevenue}} "{{this.monthlySales}}",{{/each}}];
+    var barColors = ["red", "green", "blue", "orange", "brown"];
+
+    new Chart("myChartBar", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Monthly Revenue"
+            }
+        }
+    });
+</script>
+
+<script>
+    var xValues = ["Cash On Delivery","Online"];
+    var yValues = [{{CODCount}},{{onlineCount}}];
+    var barColors = [
+    "#b91d47",
+    "#00aba9",
+    "#2b5797",
+    "#e8c3b9",
+    "#1e7145"
+    ];
+
+    new Chart("paymentSales", {
+    type: "doughnut",
+    data: {
+        labels: xValues,
+        datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+        }]
+    },
+    options: {
+        title: {
+        display: true,
+        text: "Payment method - wise Sales Report"
+        }
+    }
+    });
+</script>
+
+<script>
+    var xValues = ["Aug", "Sep", "Oct", "Nov","Dec"];
+    var y1Values = [{{#each codRevenue}} "{{this.monthlySales}}",{{/each}}]
+    var y2Values = [{{#each onlineRevenue}} "{{this.monthlySales}}",{{/each}}]
+    new Chart("myChart", {
+    type: "line",
+    data: {
+        labels: xValues,
+        datasets: [{
+        data: y1Values,
+        borderColor: "red",
+        fill: false
+        }, { 
+        data: y2Values,
+        borderColor: "green",
+        fill: true
+        }], 
+    },
+    options: {
+        legend: { display: false }
+        
+    }
+    });
+</script>

@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-3 d-none d-md-block">
+      <div class="ad text-center">
+        <a href=""><img
+            src="/images/uber-ad.jpg"
+            style="width:45rem;height:15rem ;"
+            alt="Advertisement"
+          /></a>
+      </div>
+    </div>
+    <div class="col-12 mt-3 d-block d-md-none">
+      <div class="ad text-center">
+        <a href=""><img
+            src="/images/uber-advert.jpg"
+            style="width:20rem;height:10rem ;"
+            alt="Advertisement"
+          /></a>
+      </div>
+    </div>
+    <h3 class="heading mt-3">Categories</h3>
+    {{#each categories}}
+      <div class="col-lg-3 col-md-4 col-sm-6 mt-4">
+        <div class="card mx-auto" style="width: 14rem;height:10rem">
+          <a href="/categorypage/{{this._id}}"><img
+              src="/multer-images/category-images/{{this.image}}"
+              class="card-img-top"
+              alt="Fashion"
+              style="width:14rem;height: 10rem;"
+            />
+          </a>
+        </div>
+        <p class="text-center font-color">{{this.categoryName}}</p>
+      </div>
+    {{/each}}
+  </div>
+  <div class="row">
+    <h3 class="heading mt-3">New Arrivals</h3>
+    {{#each products}}
+      <div class="col-lg-3 col-md-4 col-sm-6 p-3 mt-4">
+        <div class="card mx-auto" style="width: 14rem;height:19rem">
+          <a href="/product-display/{{this._id}}"><img
+              src="/multer-images/product-images/{{getGIF this.images}}"
+              class="card-img-top mb-3"
+              alt="Products"
+              style="width:14rem;height: 10rem;"
+            />
+          </a>
+          <h6 class="font-color text-center">{{this.model}}</h6>
+          <div class="d-flex justify-content-between mt-3">
+            <div class="keys ms-4">
+              <h6>TOP SPEED :</h6>
+              <h6>RANGE :</h6>
+            </div>
+            <div class="values me-4">
+              <h6>{{this.topspeed}} km/h</h6>
+              <h6>{{this.range}} km</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

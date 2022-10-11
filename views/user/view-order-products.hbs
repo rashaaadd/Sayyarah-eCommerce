@@ -1,0 +1,39 @@
+<section class="my-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      {{#each orderProducts}}
+        <div class="col-md-8">
+          <div class="card p-3 mt-3">
+            <div class="row">
+              <div class="col-md-6 text-center">
+                <img
+                  src="/multer-images/product-images/{{this.product.images.[1]}}"
+                  style="width:15em ;height:10em"
+                  alt="Product Image"
+                />
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex justify-content-between mt-3 my-3">
+                  <div class="keys ms-4 text-start">
+                    <h6>Vendor :</h6>
+                    <h6>Model:</h6>
+                    <h6>Category:</h6>
+                    <h6>Quantity:</h6>
+                    <h6>Booking Price :</h6>
+                  </div>
+                  <div class="values me-4 text-end">
+                    <h6 class="font-color">{{this.product.vendor}}</h6>
+                    <h6>{{this.product.model}}</h6>
+                    <h6>{{this.product.category}}</h6>
+                    <h6>{{this.quantity}}</h6>
+                    <h6>₹{{this.product.bookprice}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</section>

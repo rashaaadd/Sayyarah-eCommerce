@@ -1,0 +1,74 @@
+<section class="cart py-4" style="background-color: rgb(228, 228, 228);height:30rem">
+  <div class="container">
+    <div class="row">
+        <h2 class="text-secondary">Wishlist</h2>
+        {{#if (lengthIsZero wishlistProds)}}
+          <h5 class="text-center text-secondary">Wishlist is empty</h5>
+          <hr>
+        {{/if}}
+        {{#each wishlistProds}}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card p-3" style="width: 17rem;height:25rem">
+          <img
+            src="/multer-images/product-images/{{this.product.images.[1]}}"
+            style="width:15rem;height: 9rem;"
+            alt=""
+          />
+          <div class="wishlist_heading pt-3 d-flex justify-content-between">
+            <h5 class="ms-3">{{this.product.model}}</h5>
+            <button class="text-secondary bg-white border-0 mb-3" onclick="deleteWishlistProd('{{this.product._id}}','{{this.user}}')"><i class="fa fa-xl mt-3 me-3 fa-xmark"></i></button>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between mt-3">
+            <div class="keys ms-4">
+              <h6>SOLD BY :</h6>
+              <h6>TOP SPEED :</h6>
+              <h6>RANGE :</h6>
+            </div>
+            <div class="values me-4">
+              <h6 class="font-color">{{this.product.vendor}}</h6>
+              <h6>{{this.product.topspeed}} km/h</h6>
+              <h6>{{this.product.range}} km</h6>
+            </div>
+          </div>
+            <a href="/addtoCart/{{product._id}}" type="button"  class="button text-center" style="text-decoration: none;">Add To Cart</a>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<script>
+  function deleteWishlistProd(prodId,userId){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url:'/deleteWishlistProd',
+          data:{
+            user:userId,
+            product:prodId
+          },
+          method:'post',
+          success:(response)=>{
+            if(response.deleteProduct){
+              Swal.fire('Hooray!', 'Product removed successfully',
+                  'success')
+            }
+            setTimeout(()=>{
+              location.reload()
+            },2000)
+          }
+        })
+      }
+    })
+  }
+</script>

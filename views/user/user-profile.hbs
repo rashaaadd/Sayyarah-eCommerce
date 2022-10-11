@@ -1,0 +1,556 @@
+<script>
+    function showAddresses() {
+        var addresses = document.getElementById('addresses')
+        addresses.style.display = "block";
+        var orders = document.getElementById('orders')
+        orders.style.display = "none"
+        var profile = document.getElementById('profile')
+        profile.style.display = "none"
+    }
+    function showOrders() {
+        var orders = document.getElementById('orders')
+        orders.style.display = "block"
+        var addresses = document.getElementById('addresses')
+        addresses.style.display = "none";
+        var profile = document.getElementById('profile')
+        profile.style.display = "none"
+    }
+    function showProfile() {
+        var profile = document.getElementById('profile')
+        profile.style.display = "block"
+        var addresses = document.getElementById('addresses')
+        addresses.style.display = "none";
+        var orders = document.getElementById('orders')
+        orders.style.display = "none"
+    }
+</script>
+<section class="p-3" style="background-color: rgb(226, 226, 226);">
+    <div class="row mt-3">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                        class="rounded-circle img-fluid" style="width: 150px;" />
+                    <h5 class="my-3">{{userDetails.fname}} {{userDetails.lname}}</h5>
+
+                </div>
+            </div>
+            <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush rounded-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <button class="bg-white border-0 text-secondary" id="manageProfile"
+                                onclick="showProfile()">Manage profile</button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <button class="bg-white border-0 text-secondary" id="getAddresses"
+                                onclick="showAddresses()">Manage Address</button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <button class="bg-white border-0 text-secondary" id="getOrders" onclick="showOrders()">My
+                                Orders</button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <a href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8" id="addresses" style="display: none;">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button text-secondary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fa fa-lg me-3 fa-plus"></i>
+                            Add new address
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <form action="" id="addressForm">
+                                <div class="row">
+                                    <div class="mb-4">
+
+                                        <div class="form-outline">
+                                            <label for="name" class="form-label font-color">Full
+                                                Name</label>
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                placeholder="Type here" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label for="address" class="form-label font-color">Address</label>
+                                            <input type="text" class="form-control" name="address" id="address"
+                                                placeholder="Type here" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="city" class="form-label font-color">City</label>
+                                        <input type="text" class="form-control" name="city" id="city"
+                                            placeholder="Type here" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label for="state" class="form-label font-color">State</label>
+                                            <input type="text" class="form-control" name="state" id="state"
+                                                placeholder="Type here" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="country" class="form-label font-color">Country</label>
+                                        <input type="text" class="form-control" name="country" id="country"
+                                            placeholder="Type here" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label for="pincode" class="form-label font-color">Postal
+                                                Code</label>
+                                            <input type="text" class="form-control" name="pincode" id="pincode"
+                                                placeholder="Type here" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="contact" class="form-label font-color">Contact
+                                            No.</label>
+                                        <input type="tel" class="form-control" name="contact" id="contact"
+                                            placeholder="Type here" />
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary" type="submit">Add address</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{#each userAddresses}}
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <div class="d-flex justify-content-between p-3">
+                        <div class="d-flex flex-column text-secondary">
+                            <h6 class="mt-3">
+                                {{this.address}},{{this.city}},{{this.state}},{{this.country}},{{this.pincode}}</h6>
+                            <h6>{{this.contact}}</h6>
+                        </div>
+                        <div class="ms-auto d-flex">
+                            <a class="accordion-button text-secondary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne{{this._addId}}" aria-expanded="true"
+                                aria-controls="collapseOne">
+                                <i class="fa fa-pen-to-square"></i>
+                            </a>
+                            <button class="text-danger bg-white border-0" onclick="deleteAddress('{{this._addId}}')"><i
+                                    class="fa fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div id="collapseOne{{this._addId}}" class="accordion-collapse collapse"
+                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <form action="" id="editAddressForm{{this._addId}}">
+                                <div class="row">
+                                    <div class="mb-4">
+
+                                        <div class="form-outline">
+                                            <label for="exampleInputEmail1" class="form-label font-color">Full
+                                                Name</label>
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                aria-describedby="emailHelp" placeholder="Type here"
+                                                value="{{this.name}}" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label for="exampleInputEmail1"
+                                                class="form-label font-color">Address</label>
+                                            <input type="text" class="form-control" name="address" id="address"
+                                                aria-describedby="emailHelp" placeholder="Type here"
+                                                value="{{this.address}}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="exampleInputEmail1" class="form-label font-color">City</label>
+                                        <input type="text" class="form-control" name="city" id="city"
+                                            aria-describedby="emailHelp" placeholder="Type here"
+                                            value="{{this.city}}" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label for="exampleInputEmail1" class="form-label font-color">State</label>
+                                            <input type="text" class="form-control" name="state" id="state"
+                                                aria-describedby="emailHelp" placeholder="Type here"
+                                                value="{{this.state}}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="exampleInputEmail1" class="form-label font-color">Country</label>
+                                        <input type="text" class="form-control" name="country" id="country"
+                                            aria-describedby="emailHelp" placeholder="Type here"
+                                            value="{{this.country}}" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label for="exampleInputEmail1" class="form-label font-color">Postal
+                                                Code</label>
+                                            <input type="text" class="form-control" name="pincode" id="pincode"
+                                                aria-describedby="emailHelp" placeholder="Type here"
+                                                value="{{this.pincode}}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="exampleInputEmail1" class="form-label font-color">Contact
+                                            No.</label>
+                                        <input type="tel" class="form-control" name="contact" id="contact"
+                                            aria-describedby="emailHelp" placeholder="Type here"
+                                            value="{{this.contact}}" />
+                                    </div>
+                                    <input type="text" name="_addId" value="{{this._addId}}" hidden />
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary" onclick="editAddress('{{this._addId}}')"
+                                        type="submit">Edit address</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="col-lg-8" id="orders" style="display: none;">
+            <h4 class="font-color text-center">My Orders</h4>
+            <div class="row justify-content-center">
+                {{#each orderDetails}}
+                <div class="col-md-9">
+                    <div class="card mt-3" style="height:20em">
+                        <div class="row">
+                            <div class="d-flex justify-content-between mt-3 my-3">
+                                <div class="col-3">
+                                    <div class="keys ms-3">
+                                        <h6>Order ID :</h6>
+                                        <h6>Billing Address:</h6>
+                                        <br>
+                                        <h6>Time:</h6>
+                                        <h6>Total :</h6>
+                                        {{#if this.discount}}
+                                        <h6>Discount:</h6>
+                                        {{/if}}
+                                        <h6>Order Status:</h6>
+                                        <h6>Message:</h6>
+                                        {{#if (orderCancelled this.status)}}
+                                        <br>
+                                        {{/if}}
+                                        <h6>Payment Method:</h6>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="values me-3 text-end">
+                                        <h6><span id="totalBookPrice">{{this._id}}</span></h6>
+                                        <h6><span
+                                                id="billingAddress">{{this.deliveryDetails.address}},{{this.deliveryDetails.city}}</span>
+                                        </h6>
+                                        <h6><span
+                                                id="address">{{this.deliveryDetails.state}},{{this.deliveryDetails.country}},{{this.deliveryDetails.pincode}}</span>
+                                        </h6>
+                                        <h6>{{this.date}}</h6>
+                                        <h6>₹<span id="grandTotal">{{this.totalAmount}}</span></h6>
+                                        {{#if this.discount}}
+                                        <h6 class="text-success">₹{{this.discount}}</h6>
+                                        {{/if}}
+                                        <h6>{{this.status}}</h6>
+                                        {{#if (orderBooked this.status)}}
+                                        <h6 class="text-warning">Booking confirmed. Approval Pending</h6>
+                                        {{else}}{{#if (orderApproved this.status)}}
+                                        <h6 class="text-success">Booking Approved! Our team will be contacting you
+                                            shortly.</h6>
+                                        {{else}}{{#if (orderRejected this.status)}}
+                                        <h6 class="text-danger">Unfortunately your booking has been rejected. Please
+                                            contact our team for further details.</h6>
+                                        {{else}}{{#if (orderPending this.status)}}
+                                        <h6 class="text-warning">Booking under consideration. Contact our support team.
+                                        </h6>
+                                        {{else}}{{#if (orderCancelled this.status)}}
+                                        <h6 class="text-danger">Booking cancelled. Refund will initaited within 7 days
+                                            if debitted.</h6>
+                                        {{/if}}
+                                        {{/if}}
+                                        {{/if}}
+                                        {{/if}}
+                                        {{/if}}
+                                        <h6>{{this.paymentMethod}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-4 text-center">
+                                <a href="/view-order-products/{{this._id}}" class="text-secondary mb-4" type="button"><i
+                                        class="fa fa-lg fa-expand"></i></a>
+                                {{#if (not (orderCancelled this.status))}}
+                                <button class="text-danger border-0 bg-white ms-4 mb-4"
+                                    onclick="cancelOrder('{{this._id}}')" type="button"><i
+                                        class="fa fa-lg fa-xmark"></i></button>
+                                {{/if}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="col-lg-8" id="profile" style="display: block;">
+            <div class="card">
+                <div class="row">
+                    <div class="d-flex justify-content-between mt-3 my-3">
+                        <div class="keys ms-4">
+                            <h6>First Name:</h6>
+                            <h6>Last Name:</h6>
+                            <h6>Email:</h6>
+                            <h6>Gender:</h6>
+                            <h6>Date of Birth: <span class="p">(yyyy/mm/dd)</span></h6>
+                        </div>
+                        <div class="values me-4 text-end">
+                            <h6>{{userDetails.fname}}</h6>
+                            <h6>{{userDetails.lname}}</h6>
+                            <h6>{{userDetails.email}}</h6>
+                            <h6>{{userDetails.gender}}</h6>
+                            <h6>{{userDetails.dob}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-4 text-center">
+                        <a href="/view-order-products/{{this._id}}" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal{{this._id}}" data-bs-whatever="@mdo" type="button">Edit</a>
+                    </div>
+                    <div class="text-center mt-3">
+                        <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-color" id="exampleModalLabel">Edit
+                                            User</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" id="editUserDetails">
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-6 mb-4">
+
+                                                    <div class="form-outline">
+                                                        <label for="exampleInputEmail1"
+                                                            class="form-label font-color">First Name</label>
+                                                        <input type="text" class="form-control" name="fname"
+                                                            placeholder="First Name" value="{{userDetails.fname}}" />
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+
+                                                    <label for="exampleInputEmail1" class="form-label font-color">Last
+                                                        Name</label>
+                                                    <input type="text" class="form-control" name="lname"
+                                                        placeholder="Last Name" value="{{userDetails.lname}}" />
+
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn-primary" type="submit">Edit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{! /Add product Modal }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    jQuery.validator.addMethod("lettersonly", function (value) {
+        return /^[a-z\s]+$/i.test(value);
+    });
+    $('#addressForm').validate({
+        rules: {
+            name: {
+                required: true,
+                lettersonly: true,
+                minlength: 3
+            },
+            address: {
+                required: true,
+                lettersonly: true,
+            },
+            city: {
+                required: true,
+                lettersonly: true,
+            },
+            state: {
+                required: true,
+                lettersonly: true,
+            },
+            country: {
+                required: true,
+                lettersonly: true,
+            },
+            pincode: {
+                required: true,
+                number: true,
+            },
+            contact: {
+                required: true,
+                number: true,
+                minlength: 10,
+                maxlength: 10
+            },
+        },
+        messages: {
+            name: {
+                lettersonly: "Enter only characters."
+            },
+            address: {
+                lettersonly: "Enter only characters."
+            },
+            city: {
+                lettersonly: "Enter only characters."
+            },
+            
+            country: {
+                lettersonly: "Enter only characters."
+            },
+            pincode: {
+                number: "Enter a valid pincode",
+            },
+            contact: {
+                minlength: "Please enter 10 digits.",
+                maxLength: "Please enter 10 digits.",
+            }
+        },
+        submitHandler : (form)=>{
+            $.ajax({
+                url:
+                    '/add-address', type: 'POST', data: $('#addressForm').serialize(), 
+                    success:
+                    (response) => {
+                        if (response.status) {
+                            Swal.fire('Hooray!', 'Address added successfully', 'success')
+                            setTimeout(() => { location.reload() }, 2000)
+                        }
+                    }
+            })
+        }
+    })
+    
+    function editAddress(addId) {
+        $("#editAddressForm" + addId).submit((e) => {
+            e.preventDefault(); $.ajax({
+                url: '/edit-address', method: 'post', data:
+                    $('#editAddressForm' + addId).serialize(), success: (response) => {
+                        if
+                            (response.status) {
+                            Swal.fire('Hooray!', 'Address updated successfully',
+                                'success')
+                            setTimeout(() => { location.reload() }, 2000)
+                        }
+                    }
+            })
+        })
+    }
+    function deleteAddress(addId) {
+        Swal.fire({
+            title: 'Are you sure you want to delete this address ? ',
+            text: "You won't be able to revert this!", icon: 'warning',
+            showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if
+                (result.isConfirmed) {
+                $.ajax({
+                    url: '/delete-address/' + addId, method:
+                        'post', success: ((response) => {
+                            if (response.deleteProduct) {
+                                Swal.fire('Deleted!', 'Your address has been deleted.', 'success')
+                                setTimeout(() => { location.reload() }, 2000)
+                            }
+                        })
+                })
+            }
+        })
+    }
+
+    $("#editUserDetails").submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/edit-user-data',
+            method: 'post',
+            data: $('#editUserDetails').serialize(),
+            success: (response) => {
+                if (response.status) {
+                    Swal.fire('Hooray!', 'Details updated successfully', 'success')
+                    setTimeout(() => {
+                        location.reload()
+                    }, 2000)
+                }
+            }
+        })
+    })
+
+    function cancelOrder(ordId) {
+        Swal.fire({
+            title: 'Are you sure you want to cancel this order ? ',
+            text: "You won't be able to revert this!", icon: 'warning',
+            showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/cancel-order/' + ordId,
+                    method: 'post',
+                    success: ((response) => {
+                        if (response.cancelled) {
+                            Swal.fire('Cancelled!', 'Your order has been cancelled.', 'success')
+                            setTimeout(() => { location.reload() }, 2000)
+                        }
+                    })
+                })
+            }
+        })
+    }
+
+
+
+    
+
+</script>

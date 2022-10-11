@@ -1,0 +1,220 @@
+<section>
+    <div class="container p-3">
+        <h3 class="font-color ms-3 d-none d-lg-block">Coupons</h3>
+        <h3 class="font-color text-center d-block d-lg-none">Coupons</h3>
+        <div class="row mt-4">
+            {{#each coupons}}
+            <div class="col-lg-4 col-sm-6">
+                <div class="card coupons py-3 mt-3">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between">
+                                <div class="ms-4">
+                                    <p class="text-start">Coupon code:</p>
+                                </div>
+                                <div class="me-4">
+                                    <h6>{{this.code}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between">
+                                <div class="ms-4">
+                                    <p class="text-start">Discount Price:</p>
+                                </div>
+                                <div class="me-4">
+                                    <h6>₹<span>{{this.discountPrice}}</span></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between">
+                                <div class="ms-4">
+                                    <p class="text-start">Expiry Date:</p>
+                                </div>
+                                <div class="me-4">
+                                    <h6 class="text-end">{{this.expiryDate}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between">
+                                <div class="ms-4">
+                                    <p class="text-start">Min. Cart Price:</p>
+                                </div>
+                                <div class="me-4">
+                                    <h6 class="text-end">₹{{this.minCartPrice}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="d-flex justify-content-center">
+                            <div class="d-flex mx-auto mb-3">
+                                <button type="button" class="text-secondary bg-white border-0" data-bs-toggle="modal"
+                                    data-bs-target="#editCoupon{{this._id}}" data-bs-whatever="@mdo">
+                                    <i class="fa fa-lg fa-pen-to-square mt-3"></i></button>
+                                {{! Edit modal }}
+                                <div class="modal fade" id="editCoupon{{this._id}}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title font-color" id="exampleModalLabel">Edit
+                                                    Coupon</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="" id="editCouponForm">
+                                                    <div class="row">
+                                                        <div class="mb-3 col-6">
+                                                            <label for="recipient-name" class="form-label">COUPON
+                                                                CODE:</label>
+                                                            <input type="text" class="form-control" name="code"
+                                                                id="code" value="{{this.code}}" />
+                                                        </div>
+                                                        <div class="mb-3 col-6">
+                                                            <label for="formFile" class="form-label">DISCOUNT
+                                                                PRICE:</label>
+                                                            <input type="text" class="form-control" name="discountPrice"
+                                                                id="discountPrice" value="{{this.discountPrice}}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-6">
+                                                            <label for="formFile" class="form-label">EXPIRY
+                                                                DATE:</label>
+                                                            <input type="date" class="form-control" name="expiryDate"
+                                                                id="expiryDate" value="{{this.expiryDate}}" />
+                                                        </div>
+                                                        <div class="mb-3 col-6">
+                                                            <label for="formFile" class="form-label">MINIMUM CART
+                                                                PRICE:</label>
+                                                            <input type="text" class="form-control" name="minCartPrice"
+                                                                id="minCartPrice" value="{{this.minCartPrice}}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{! /Edit Modal }}
+                                <a onclick="deleteCoupon('{{this._id}}')" class="text-danger ms-4"
+                                    type="button"><i class="fa fa-lg fa-trash mt-3"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="text-center mt-4">
+            <div class="text-center mb-3">
+                <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#addCoupon"
+                    data-bs-whatever="@mdo">
+                    Add Coupon</button>
+                {{! Add modal }}
+                <div class="modal fade" id="addCoupon" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title font-color" id="exampleModalLabel">Add
+                                    Coupon</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" id="addCouponForm">
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label for="recipient-name" class="form-label">COUPON CODE:</label>
+                                            <input type="text" class="form-control" name="code" id="code" />
+                                        </div>
+                                        <div class="mb-3 col-6">
+                                            <label for="formFile" class="form-label">DISCOUNT PRICE:</label>
+                                            <input type="text" class="form-control" name="discountPrice"
+                                                id="discountPrice" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-6">
+                                            <label for="formFile" class="form-label">EXPIRY DATE:</label>
+                                            <input type="date" class="form-control" name="expiryDate" id="expiryDate" />
+                                        </div>
+                                        <div class="mb-3 col-6">
+                                            <label for="formFile" class="form-label">MINIMUM CART PRICE:</label>
+                                            <input type="text" class="form-control" name="minCartPrice"
+                                                id="minCartPrice" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{! /Add Modal }}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $('#addCouponForm').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/admin/add-coupon',
+            method: 'post',
+            data: $('#addCouponForm').serialize(),
+            success: (response) => {
+                if (response.status) {
+                    Swal.fire('Hooray!', 'Coupon added successfully', 'success')
+                    setTimeout(() => {
+                        location.reload()
+                    }, 2000)
+                }
+            }
+        })
+    })
+
+    function deleteCoupon(coupId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/delete-coupon/' + coupId,
+                    method: 'POST',
+                    success: ((response) => {
+                        if (response.couponDeleted) {
+                            Swal.fire('Success', 'Coupon deleted successfully', 'success')
+                            setTimeout(() => {
+                                location.reload()
+                            }, 2000)
+                        }
+                    })
+                })
+            }
+        })
+    }
+</script>

@@ -1,0 +1,65 @@
+<div class="container mt-5 mb-5">
+  <div class="card p-5 mx-auto" style="background-color: #eff1f1;width:80%">
+    <div class="row">
+      <div class="col-6 text-center">
+        <img
+          src="/multer-images/product-images/{{getGIF product.images}}"
+          style="width: 20em;height:10em"
+          alt="Product Image"
+        />
+        <div class="row mt-5 d-flex px-3">
+          {{#each (getNotGIF product.images)}}
+            <div class="col-4">
+              <div class="prodimages">
+                <img
+                  src="/multer-images/product-images/{{this}}"
+                  style="width: 100px;height:50px"
+                  alt="product images"
+                />
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+      <div class="col-6">
+        <h3>{{product.model}}</h3>
+        <hr />
+        <div class="d-flex justify-content-between mt-3">
+          <div class="keys ms-4">
+            <h6>SOLD BY :</h6>
+            <h6>TOP SPEED :</h6>
+            <h6>RANGE :</h6>
+          </div>
+          <div class="values me-4">
+            <h6 class="font-color">{{product.vendor}}</h6>
+            <h6>{{product.topspeed}} km/h</h6>
+            <h6>{{product.range}} km</h6>
+          </div>
+        </div>
+        <hr />
+        <div>
+          <p>Choose Color:</p>
+          <div class="d-flex mb-3">
+            <a type="button" href="" class="product-color-red"></a>
+            <a type="button" href="" class="product-color-black ms-3"></a>
+          </div>
+        </div>
+        <div class="cart-button d-flex">
+          <a href="/addtoCart/{{product._id}}" type="button"  class="button ms-3">Add To Cart</a>
+          <a href="/addtoWishlist/{{product._id}}" type="button" class="button ms-3">Add To Wishlist</a>
+          <a href="" type="button" class="button ms-3">Buy Now</a>
+        </div>
+        {{#if prodExist}}
+        <p class="text-center mt-3 text-warning">Product already added to Wishlist</p>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function prodAdded(){
+    Swal.fire('Hooray!', 'Product added successfully to Wishlist',
+            'success')
+  }
+</script>

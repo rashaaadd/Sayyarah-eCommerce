@@ -1,0 +1,184 @@
+<section class="cart py-4" style="background-color: rgb(228, 228, 228);min-height:30rem">
+  <div class="container">
+    {{#if (not total)}}
+    <div class="cart-empty d-flex flex-column">
+      <h4 class="text-center text-secondary my-auto">Cart is empty</h4>
+      <i class="fa fa-2xl text-center text-secondary mt-4 mb-3 fa-cart-shopping"></i>
+      <hr>
+    </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-lg-8 p-3">
+        {{#each products}}
+        <div class="card mt-3">
+          <div class="row p-4 align-items-center">
+            <div class="col-6">
+              <img src="/multer-images/product-images/{{this.product.images.[1]}}"
+                style="width: 100%;height: 11rem;border: 1px solid rgb(143, 142, 142);border-radius: 10px;"
+                alt="Product Image" />
+            </div>
+            <div class="col-6 justify-content-between align-items-center">
+              <div class="row">
+                <div class="col-6 col-lg-12">
+                  <h4>{{this.product.model}}</h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6 col-lg-12 d-flex">
+                  <div class="product-details">
+                    <div class="keys mt-3">
+                      <h6>RANGE :</h6>
+                      <p class="text-secondary">{{this.product.range}} km</p>
+                      <h6>TOP SPEED :</h6>
+                      <p class="text-secondary">{{this.product.topspeed}}
+                        km/h</p>
+                      <h6>PRICE :</h6>
+                      <p class="text-secondary">₹{{this.product.price}}</p>
+                    </div>
+                  </div>
+                  <div class="ms-4 d-flex">
+                    <div class="product-details ps-4">
+                      <div class="keys mt-4">
+                        <h6> BOOKING <br /> PRICE:</h6>
+                        <p class="text-secondary">₹{{this.product.bookprice}}</p>
+                      </div>
+                    </div>
+                    <div class="ps-4 mt-4 text-center d-flex flex-column">
+                      <div class="product_count" id="kkk">
+                        <input type="text" name="qty" id="{{this.product._id}}" maxlength="12" value="{{this.quantity}}"
+                          title="Quantity:" class="input-text qty" disabled />
+                        <button
+                          onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userLogged._id}}',1)"
+                          class="increase items-count"><i class="fa fa-xs mt-3 fa-plus"></i></button>
+                        <button
+                          onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../userLogged._id}}',-1)"
+                          class="reduced items-count" type="button"><i class="fa fa-xs mb-3 fa-minus"></i></button>
+                      </div>
+                      <button onclick="deleteProduct('{{this._id}}','{{this.product._id}}')"
+                        class="text-danger bg-white border-0" type="button"><i class="fa fa-trash"></i></button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{#if total}}
+      <div class="col-lg-4 mt-3 p-3">
+        <div class="card text-secondary justify-content-center">
+          <div class="d-flex justify-content-between mt-3">
+            <div class="keys ms-4">
+              <h6>Total vehicle price :</h6>
+            </div>
+            <div class="values me-4">
+              <h6>₹<span id="total">{{total.total}}</span></h6>
+            </div>
+          </div>
+          <hr class="mx-4" />
+          <div class="d-flex justify-content-between mt-3 my-3">
+            <div class="keys ms-4">
+              <h6>Total booking price :</h6>
+              <h6>Tax(5%) :</h6>
+              <h6>Total :</h6>
+            </div>
+            <div class="values me-4">
+              <h6>₹<span id="totalBookPrice">{{totalBookingPrice.total}}</span></h6>
+              <h6>₹<span id="taxPrice">{{tax totalBookingPrice.total}}</span></h6>
+              <h6>₹<span id="grandTotal">{{sum totalBookingPrice.total (tax totalBookingPrice.total)}}</span></h6>
+            </div>
+          </div>
+          <hr class="mx-4" />
+          <div class="col-12 d-flex flex-column text-center mb-4">
+            <a href="/review-cart" class="cart-button1 mx-auto mt-3">Checkout</a>
+            <a href="/" class="cart-button2 mx-auto mt-3">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+<script>
+  function changeQuantity(cartId, prodId, userId, count) {
+    let quantity = parseInt(document.getElementById(prodId).value)
+    
+    $.ajax({
+      url: '/change-product-quantity',
+      data: {
+        cart: cartId,
+        user: userId,
+        product: prodId,
+        count: count,
+        quantity: quantity
+      },
+      method: 'post',
+      success: ((response) => {
+        if (response.removeProduct) {
+          Swal.fire('Hooray!', 'Product deleted successfully',
+            'success')
+          setTimeout(()=>{
+            location.reload()
+          }, 2000)
+
+        } else if (response.status) {
+          if (count < 0) {
+            document.getElementById(prodId).value = quantity + count
+            Swal.fire('Hooray!', 'Product removed successfully',
+              'success')
+            document.getElementById('total').innerHTML = response.total.total
+            document.getElementById('totalBookPrice').innerHTML = response.totalBookingPrice.total
+            document.getElementById('taxPrice').innerHTML = response.totalBookingPrice.total * (5 / 100)
+            document.getElementById('grandTotal').innerHTML = response.totalBookingPrice.total + response.totalBookingPrice.total * (5 / 100)
+          } else {
+            document.getElementById(prodId).value = quantity + count
+            Swal.fire('Hooray!', 'Product added successfully',
+              'success')
+            console.log(response)
+            document.getElementById('total').innerHTML = response.total.total
+            document.getElementById('totalBookPrice').innerHTML = response.totalBookingPrice.total
+            document.getElementById('taxPrice').innerHTML = response.totalBookingPrice.total * (5 / 100)
+            document.getElementById('grandTotal').innerHTML = response.totalBookingPrice.total + response.totalBookingPrice.total * (5 / 100)
+          }
+        }
+      })
+    })
+  }
+  function deleteProduct(cartId, prodId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/delete-cart-product',
+          data: {
+            cart: cartId,
+            product: prodId
+          },
+          method: 'post',
+          success: ((response) => {
+            if (response.deleteProduct) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+              setTimeout(()=>{
+                location.reload()
+              },2000)
+            }
+          })
+        })
+      }
+    })
+  }
+</script>

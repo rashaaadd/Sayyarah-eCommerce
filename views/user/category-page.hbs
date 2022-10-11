@@ -1,0 +1,51 @@
+<div class="container my-5 px-5">
+  <h3 class="font-color">{{upperCase categoryDetails.categoryName}}</h3>
+
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="card category-card p-4 mt-4">
+        <h4 class="mb-3">Categories</h4>
+        {{#each categories}}
+          <a
+            class="font-color"
+            href="/categorypage/{{this._id}}"
+          ><h6>{{this.categoryName}}</h6></a>
+        {{/each}}
+      </div>
+    </div>
+    <div class="col-lg-9 mt-4 mx-auto">
+      <p>{{length categProd}} items found</p>
+      <hr />
+      <div class="cat-contents">
+        <div class="row">
+          {{#each categProd}}
+            <div class="col-12 col-sm-6 p-3 mx-auto">
+              <div class="card" style="width: 16rem;height: 21rem;">
+                <a href="/product-display/{{this._id}}"><img
+                    src="/multer-images/product-images/{{getGIF this.images}}"
+                    class="card-img-top mb-3"
+                    alt="Products"
+                    style="width:16rem;height: 10rem;"
+                  />
+                </a>
+                <h5 class="text-center">{{this.model}}</h5>
+                <div class="d-flex justify-content-between mt-3">
+                  <div class="keys ms-4">
+                    <h6>SOLD BY :</h6>
+                    <h6>TOP SPEED :</h6>
+                    <h6>RANGE :</h6>
+                  </div>
+                  <div class="values me-4">
+                    <h6 class="font-color">{{this.vendor}}</h6>
+                    <h6>{{this.topspeed}} km/h</h6>
+                    <h6>{{this.range}} km</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

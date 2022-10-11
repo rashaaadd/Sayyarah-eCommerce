@@ -1,0 +1,98 @@
+<div class="container category p-5">
+  <div class="row justify-content-center">
+    <h3 class="font-color">Customers</h3>
+    <div class="card mt-5" style="width:55rem;">
+      <div class="table-content pe-4">
+
+        <table class="table table-hover m-3 col-md-9">
+          <thead>
+            <tr class="font-color">
+              <th scope="col">Sl.No</th>
+              <th scope="col">NAME</th>
+              <th scope="col">USER ID</th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each users}}
+            <tr class="align-items-center">
+              <td>{{inc @index}}</td>
+              <td>{{this.fname}} {{this.lname}}</td>
+              <td>{{this._id}}</td>
+              <td>{{this.email}}</td>
+              <td>
+                <div class="p-3">
+                  {{#if status}}
+                  <button class="border-0 text-danger" onclick="changeUserStatus('{{this._id}}','{{this.status}}')"><i
+                      class="fa fa-lg fa-user-minus"></i></button>
+                  {{else}}
+                  <button class="border-0 text-secondary" onclick="changeUserStatus('{{this._id}}')"><i
+                      class="fa fa-lg fa-user-plus"></i></button>
+                  {{/if}}
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function changeUserStatus(userId,status) {
+  if(status){
+    Swal.fire({
+      title: 'Are you sure you want to block this user? ', 
+      text: "You won't be able to revert this!", 
+      icon:'warning', 
+      showCancelButton: true, 
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33', 
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url:'/admin/change-user-status/'+userId, 
+          method: 'post', 
+          success: ((response) => {
+            if (response.status) {
+              Swal.fire('Blocked!', 'User has been blocked.', 'success') 
+              setTimeout(() => { 
+                location.reload() 
+              }, 1000) 
+            } 
+          }) 
+          }) 
+        }
+    })
+  }else{
+    Swal.fire({
+      title: 'Are you sure you want to unblock this user? ', 
+      text: "You won't be able to revert this!", 
+      icon:'warning', 
+      showCancelButton: true, 
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33', 
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url:'/admin/change-user-status/'+userId, 
+          method: 'post', 
+          success: ((response) => {
+            if (response.status) {
+              Swal.fire('Blocked!', 'User has been unblocked.', 'success') 
+              setTimeout(() => { 
+                location.reload() 
+              }, 1000) 
+            } 
+          }) 
+          }) 
+        }
+    })
+  }
+}
+</script>

@@ -1,0 +1,87 @@
+<div class="container category p-5">
+  <div class="row justify-content-center">
+    <h3 class="font-color">Categories</h3>
+    <div class="row">
+      {{#each categories}}
+      <div class="col-md-3 mt-4">
+        <div class="card mx-auto text-center" style="width: 15rem;height:15rem">
+          <a href="/admin/category-products/{{this._id}}"><img src="/multer-images/category-images/{{this.image}}"
+              class="card-img-top" alt="Category-Image" style="width:15rem;height: 8rem;" />
+          </a>
+          <h5 class="text-center">{{this.categoryName}}</h5>
+          <div class="d-flex mx-auto">
+            <button type="button" class="btn btn-primary m-3" data-bs-toggle="modal"
+              data-bs-target="#editModal{{this._id}}" data-bs-whatever="@mdo">Edit</button>
+              {{!-- Edit modal --}}
+            <div class="modal fade" id="editModal{{this._id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/admin/editCategory/{{this._id}}" method="post" id="addProductForm"
+                      enctype="multipart/form-data">
+                      <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Category:</label>
+                        <input type="text" class="form-control" name="categoryName" id="category"
+                          value="{{this.categoryName}}" />
+                      </div>
+                      <div class="mb-3">
+                        <label for="formFile" class="form-label">Image:</label>
+                        <img src="/multer-images/category-images/{{this.image}}" alt="Category-Image"
+                          style="width:120px;height:70px;margin:10px 0px">
+                        <input class="form-control" name="image" type="file" id="formFile" />
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{!-- /Edit Modal --}}
+            <a href="/admin/deleteCategory/{{this._id}}" class="btn btn-danger m-3"
+              onclick="return confirm('Are you sure you want to delete category: {{this.categoryName}} ?')">Delete</a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="text-center mt-3">
+      <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo">Add Category</button>
+    {{!--Add Modal --}}
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="/admin/addCategory" method="post" id="addProductForm" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Category:</label>
+                  <input type="text" class="form-control" name="categoryName" id="category" />
+                </div>
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Image</label>
+                  <input class="form-control" name="image" type="file" id="formFile" />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!--Add Modal end --}}
+    </div>
+  </div>

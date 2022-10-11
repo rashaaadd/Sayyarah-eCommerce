@@ -1,0 +1,43 @@
+<section class="mb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="success-image text-center">
+        <img
+          src="/images/green-round-check-tick-mark-.png"
+          style="width: 15em;height:10em"
+          alt="Success"
+        />
+      </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+            <h2 class="text-secondary text-center">Order Successfull</h2>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-between mt-3 my-3">
+                <div class="keys">
+                  <h6>Order ID :</h6>
+                  <h6>Billing Address:</h6>
+                  <br>
+                  <h6>Total :</h6>
+                  <h6>Payment Method:</h6>
+                </div>
+                <div class="values text-end">
+                  <h6><span
+                      id="totalBookPrice"
+                    >{{orderDetails._id}}</span></h6>
+                  <h6><span id="taxPrice">{{orderDetails.deliveryDetails.address}},{{orderDetails.deliveryDetails.city}}</span></h6>
+                  <h6><span id="taxPrice">{{orderDetails.deliveryDetails.state}},{{orderDetails.deliveryDetails.country}},{{orderDetails.deliveryDetails.pincode}}</span></h6>
+                  <h6>₹<span id="grandTotal">{{orderDetails.totalAmount}}</span></h6>
+                  <h6>{{orderDetails.paymentMethod}}</h6>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <a href="/orders" class="btn btn-success">View Orders</a>
+                </div>
+              </div>
+        </div>
+    </div>
+  </div>
+</section>
