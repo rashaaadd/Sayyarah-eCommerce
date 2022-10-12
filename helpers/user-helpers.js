@@ -473,15 +473,20 @@ module.exports = {
 
   getOrderAddress: (userId, addId) => {
     return new Promise(async (resolve, reject) => {
-      let user = await db
+      try {
+        let user = await db
         .get()
         .collection(collection.USER_COLLECTION)
         .findOne({ _id: objectId(userId), "addresses._addId": addId });
-      console.log(user);
-      let addressIndex = user.addresses.findIndex(
-        (address) => address._addId == addId
-      );
-      resolve(user.addresses[addressIndex]);
+        let addressIndex = user.addresses.findIndex(
+          (address) => address._addId == addId
+        );
+        if(addressIndex != -1){
+          resolve(user.addresses[addressIndex]);
+        }
+      } catch (error) {
+        reject(error)
+      }
     });
   },
 
@@ -492,8 +497,8 @@ module.exports = {
       let status = order["payment-method"] === "COD" ? "Booked" : "Pending";
       if(order.discount){
         orderObj = {
-          user: objectId(userId),
-          deliveryDetails: {
+            user: objectId(userId),
+            deliveryDetails: {
             name: address.name,
             address: address.address,
             city: address.city,
@@ -544,7 +549,7 @@ module.exports = {
               }
             );
         } else {
-          users = [objectId(userId)];
+          let users = [objectId(userId)];
           await db
             .get()
             .collection(collection.COUPON_COLLECTION)
@@ -698,12 +703,16 @@ module.exports = {
         .updateOne(
           { _id: objectId(userId) },
           {
-            $set: { currAddress: addId },
+            $set: { currAddress: addId }
           }
         )
         .then((response) => {
           resolve(response);
-        });
+        }).catch((err) => {
+          console.log(err);
+          reject(err)
+        })
+
     });
   },
 
@@ -766,7 +775,6 @@ module.exports = {
           }
         )
         .then((response) => {
-          console.log(response);
           resolve(response);
         });
     });
@@ -827,7 +835,6 @@ module.exports = {
   },
 
   generateRazorPay: (ordId, total) => {
-    console.log(ordId, total, "brrrrrrrrrrrrrrrrrrrrr");
     return new Promise((resolve, reject) => {
       var options = {
         amount: total * 100, // amount in the smallest currency unit
@@ -835,8 +842,11 @@ module.exports = {
         receipt: "" + ordId,
       };
       instance.orders.create(options, function (err, order) {
-        console.log("New Order:", order);
-        resolve(order);
+        if(err){
+          reject(err);
+        }else{
+          resolve(order);
+        }
       });
     });
   },
@@ -845,7 +855,6 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const crypto = require("crypto");
       let hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
-      console.log(hmac,'brrrrrrrrrrraaaaahhooooo');
       hmac.update(
         details["payment[razorpay_order_id]"] +
           "|" +
@@ -874,12 +883,10 @@ module.exports = {
 
   deleteCoupon: (coupId) => {
     return new Promise((resolve, reject) => {
-      console.log(coupId);
       db.get()
         .collection(collection.COUPON_COLLECTION)
         .deleteOne({ _id: objectId(coupId) })
         .then((response) => {
-          console.log(response);
           resolve(response);
         });
     });
@@ -1048,7 +1055,6 @@ module.exports = {
       for (i = 0; i <= categoryRevenue.length - 1; i++) {
         totalCategRevenue += categoryRevenue[i].total;
       }
-      console.log(totalCategRevenue,'skrrrraaaaa')
       resolve(totalCategRevenue);
     });
   },
@@ -1108,7 +1114,6 @@ module.exports = {
           }
         ])
         .toArray();
-        console.log(monthlySales);
         resolve(monthlySales)
     });
   },

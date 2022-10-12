@@ -462,7 +462,7 @@
     })
 
   $("#checkoutForm").submit((e)=>{ 
-    e.preventDefault() 
+    e.preventDefault();
     $.ajax({
       url:'/place-order', 
       method:'post', 
@@ -475,6 +475,7 @@
           },2000)
         }else{
           console.log(response)
+          console.log("hello")
           razorpayPayment(response)
         }
       } 
@@ -484,7 +485,7 @@
   function razorpayPayment(order){
     var options = {
       "key": "rzp_test_ZXDZgB7Prl01fX", // Enter the Key ID generated from the Dashboard
-      "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "amount": order.totalAmount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       "currency": "INR",
       "name": "Sayyarah",
       "description": "Online Payment",
@@ -550,7 +551,10 @@
       url: '/change-order-address/'+addId,
       method:'post',
       success:(response)=>{
-        Swal.fire('Hooray!', 'Address changed successfully', 'success') 
+        Swal.fire('Hooray!', 'Address changed successfully. Proceed to Checkout', 'success') 
+        setTimeout(()=>{
+          location.reload()
+        },1000)
       }
     })
   }

@@ -65,8 +65,6 @@ module.exports = {
       }else{
         twilioHelpers.doSms(req.body).then((data) => {
           req.session.body = req.body
-          console.log(req.body);
-          console.log(req.session.body);
           if (data.valid) {
             res.redirect('/otp')
           } else {
@@ -87,8 +85,6 @@ module.exports = {
   },
 
   verifyOTP : (req,res)=>{
-    console.log(req.body,'brrrrrr');
-    console.log(req.session.body,'tayoli')
     twilioHelpers.otpVerify(req.body, req.session.body).then((response) => {
       if (response.valid) {
         userHelpers.addUser(req.session.body).then((data) => {
@@ -298,8 +294,7 @@ module.exports = {
     });
   },
 
-  placeOrder: async(req, res) => {
-    console.log(req.body);
+  placeOrder: async(req, res, next) => {
     let products = await userHelpers.getCartProductList(req.session.user._id);
     //------------updated with better method
     // let totalBookingPrice = await userHelpers.getTotalBookingPrice(
@@ -312,7 +307,6 @@ module.exports = {
     userHelpers
       .placeOrder(req.body,address, products,req.session.user._id)
       .then((response) => {
-        console.log(response);
         if(req.body['payment-method']=='COD'){
           response.codSuccess = true
           res.json(response);
@@ -323,6 +317,9 @@ module.exports = {
               success.user = req.session.user
               res.json(success)
             })
+          }).catch(err => {
+            console.log(err);
+            next(err);
           })
         }else{
           response.status = false
@@ -353,12 +350,13 @@ module.exports = {
     });
   },
 
-  changeOrderAddress: (req,res)=>{
+  changeOrderAddress: (req,res,next)=>{
     addId = req.params.id
     userId = req.session.user._id
     userHelpers.changeOrderAddressStatus(addId,userId).then((response)=>{
       res.json({status:true})
-    })
+    }).catch((error)=>{
+      next(error)})
   },
 
   viewOrders: async(req,res)=>{
@@ -385,11 +383,8 @@ module.exports = {
   },
 
   verifyPayment : (req,res)=>{
-    console.log(req.body,'brrrrrrr myre');
     userHelpers.verifyPayment(req.body).then((response)=>{
       userHelpers.bookedOrder(req.body['order[receipt]']).then(()=>{
-        console.log("Payement is successfull brrrrrrrrrrrrrrrr");
-        console.log({status:true,ordId:req.body['order[receipt]']},'dracaaarys');
         res.json({status:true,ordId:req.body['order[receipt]']})
       })
     }).catch((err)=>{
@@ -399,7 +394,6 @@ module.exports = {
   },
 
   verifyCoupon : async(req,res)=>{
-    console.log(req.body);
     let totalBookingPrice = await userHelpers.getTotalBookingPrice(
       req.session.user._id
     );

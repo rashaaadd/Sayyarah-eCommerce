@@ -35,7 +35,6 @@ module.exports = {
 
     
     updateCategory:((categDetails,categId)=>{
-        console.log(categDetails);
         return new Promise ((resolve,reject)=>{
             db.get().collection(collection.CATEGORY_COLLECTION).updateOne(
                 {_id:objectId(categId)},

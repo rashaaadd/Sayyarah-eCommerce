@@ -100,13 +100,11 @@ module.exports = {
       req.body.image = image
     }
     categoryHelpers.updateCategory(req.body, req.params.id).then((oldImage) => {
-      console.log(oldImage);
       if(oldImage){
         var oldImagePath = path.join(
           __dirname,
           "../public/multer-images/category-images/" + oldImage
         );
-        console.log(oldImagePath);
         fs.unlink(oldImagePath, function (err) {
           if (err) return err;
         });
@@ -235,7 +233,6 @@ module.exports = {
 
   ordersPage : async(req,res)=>{
     let allOrders = await userHelpers.getAllOrders();
-    console.log(allOrders);
     res.render('admin/orders',{admin: req.session.admin,allOrders})
   },
 
@@ -280,7 +277,6 @@ module.exports = {
   },
 
   deleteCoupon : (req,res)=>{
-    console.log(req.params.id);
     userHelpers.deleteCoupon(req.params.id).then((response)=>{
       res.json({couponDeleted:true})
     })
